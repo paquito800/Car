@@ -1,0 +1,427 @@
+
+local lp = game.Players.LocalPlayer
+local mouse = lp:GetMouse()
+local w_ing = false
+local r15
+
+_G.maxspeed = 25
+_G.minspeed = 6
+
+if lp.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then 
+	r15 = true
+else
+	r15 = false
+end
+
+local anims = lp.Character.Animate
+
+anims.idle.Animation2:Destroy()
+
+local hat = lp.Character:FindFirstChild("MeshPartAccessory")
+
+local idle = anims.idle:FindFirstChildOfClass("Animation").AnimationId
+
+local walk = anims.walk:FindFirstChildOfClass("Animation").AnimationId
+
+local run = anims.run:FindFirstChildOfClass("Animation").AnimationId
+
+local jump = anims.jump:FindFirstChildOfClass("Animation").AnimationId
+
+local sit = anims.sit:FindFirstChildOfClass("Animation").AnimationId
+
+if hat.Handle ~= nil then
+
+    tool = Instance.new("Tool", lp.Backpack)
+	tool.Grip = CFrame.new(1.5,1.5,-0.8)
+    tool.Name = "Car"
+
+	tool.Equipped:Connect(function()
+anims.idle:FindFirstChildOfClass("Animation").AnimationId = sit
+anims.walk:FindFirstChildOfClass("Animation").AnimationId = sit
+anims.run:FindFirstChildOfClass("Animation").AnimationId = sit
+anims.jump:FindFirstChildOfClass("Animation").AnimationId = sit
+if r15 then 
+lp.Character.Humanoid.HipHeight = 0.85
+	else
+lp.Character.Humanoid.HipHeight = -0.9
+end
+	end)
+
+	tool.Unequipped:Connect(function()
+lp.Character.Humanoid.WalkSpeed = 16
+anims.idle:FindFirstChildOfClass("Animation").AnimationId = idle
+anims.walk:FindFirstChildOfClass("Animation").AnimationId = walk
+anims.run:FindFirstChildOfClass("Animation").AnimationId = run
+anims.jump:FindFirstChildOfClass("Animation").AnimationId = jump
+if r15 then 
+lp.Character.Humanoid.HipHeight = 2
+	else
+lp.Character.Humanoid.HipHeight = 0
+end
+	end)
+
+	tool.Equipped:Connect(function()
+		
+	game.CoreGui.ScreenGui.Frame:TweenPosition(UDim2.new(0.2, 0, 0.3, 0),"Out","Quad",1,true)
+	game.CoreGui.ScreenGui.speedframe:TweenPosition(UDim2.new(0.89, 0,0.400, 0),"Out","Quad",1,true)
+	
+	
+local Anim = Instance.new("Animation")
+Anim.AnimationId = sit
+local k = lp.Character.Humanoid:LoadAnimation(Anim)
+k:Play()
+k:AdjustSpeed(1)
+k:Destroy()
+Anim:Destroy()
+wait()
+lp.Character.Humanoid:Move(Vector3.new(10,0,0))
+	end)
+
+	tool.Unequipped:Connect(function()
+		
+	game.CoreGui.ScreenGui.Frame:TweenPosition(UDim2.new(-0.2, 0, -0.3, 0),"Out","Quad",1,true)
+	game.CoreGui.ScreenGui.speedframe:TweenPosition(UDim2.new(-0.89, 0,-0.4, 0),"Out","Quad",1,true)
+	
+	
+local Anim = Instance.new("Animation")
+Anim.AnimationId = run
+local k = lp.Character.Humanoid:LoadAnimation(Anim)
+k:Play()
+k:AdjustSpeed(1)
+k:Destroy()
+Anim:Destroy()
+wait()
+lp.Character.Humanoid:Move(Vector3.new(10,0,0))
+	end)
+
+
+        local hathandle = hat.Handle
+        hathandle:FindFirstChildOfClass("Weld"):Destroy()
+        hathandle.Parent = tool
+        hathandle.Massless = true
+
+
+
+
+
+mouse.KeyDown:Connect(function(key)
+    if key == "w" then
+ w_ing = true
+	end
+end)
+
+
+mouse.KeyUp:Connect(function(key)
+    if key == "w" then
+ w_ing = false
+	end
+end)
+
+
+
+
+spawn(function()
+
+repeat wait()
+	if w_ing and tool.Parent == lp.Character then
+		if lp.Character.Humanoid.WalkSpeed < _G.maxspeed then
+lp.Character.Humanoid.WalkSpeed = lp.Character.Humanoid.WalkSpeed +1 
+		end
+	elseif not w_ing and tool.Parent == lp.Character then
+		if lp.Character.Humanoid.WalkSpeed > _G.minspeed then
+lp.Character.Humanoid.WalkSpeed = lp.Character.Humanoid.WalkSpeed -6
+		end
+
+	end
+until lp.Character.Humanoid.Health <= 0
+
+end)
+
+local son = true
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local optbtn = Instance.new("TextButton")
+local Frame_2 = Instance.new("Frame")
+local maxspeed = Instance.new("TextLabel")
+local line = Instance.new("TextLabel")
+local _25 = Instance.new("TextButton")
+local _200 = Instance.new("TextButton")
+local _100 = Instance.new("TextButton")
+local _50 = Instance.new("TextButton")
+--Properties:
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.Active = true
+Frame.BackgroundColor3 = Color3.new(0.431373, 0.431373, 0.431373)
+Frame.BackgroundTransparency = 0.30000001192093
+Frame.BorderSizePixel = 2
+Frame.Position = UDim2.new(-0.2, 0, -0.3, 0)
+Frame.Size = UDim2.new(0, 163, 0, 48)
+
+optbtn.Name = "optbtn"
+optbtn.Parent = Frame
+optbtn.BackgroundColor3 = Color3.new(0.815686, 0.815686, 0.815686)
+optbtn.BackgroundTransparency = 0.30000001192093
+optbtn.BorderSizePixel = 2
+optbtn.Position = UDim2.new(0.117860004, 0, 0.28766194, 0)
+optbtn.Size = UDim2.new(0, 124, 0, 19)
+optbtn.Font = Enum.Font.Code
+optbtn.Text = "Car Options"
+optbtn.TextColor3 = Color3.new(0, 0, 0)
+optbtn.TextSize = 14
+
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.new(0.431373, 0.431373, 0.431373)
+Frame_2.BackgroundTransparency = 0.30000001192093
+Frame_2.BorderSizePixel = 2
+Frame_2.Position = UDim2.new(0, 0, 1.04999995, 0)
+Frame_2.Size = UDim2.new(0, 163, 0, 178)
+
+maxspeed.Name = "maxspeed"
+maxspeed.Parent = Frame_2
+maxspeed.BackgroundColor3 = Color3.new(1, 1, 1)
+maxspeed.BackgroundTransparency = 1
+maxspeed.BorderSizePixel = 0
+maxspeed.Position = UDim2.new(0.0674846619, 0, 0.0337078646, 0)
+maxspeed.Size = UDim2.new(0, 143, 0, 20)
+maxspeed.Font = Enum.Font.SourceSans
+maxspeed.Text = "Max Speed"
+maxspeed.TextColor3 = Color3.new(0, 0, 0)
+maxspeed.TextScaled = true
+maxspeed.TextSize = 14
+maxspeed.TextWrapped = true
+
+line.Name = "line"
+line.Parent = Frame_2
+line.BackgroundColor3 = Color3.new(0, 0, 0)
+line.BackgroundTransparency = 0
+line.BorderSizePixel = 0
+line.Position = UDim2.new(0.128834352, 0, 0.146067411, 0)
+line.Size = UDim2.new(0, 119, 0, 1)
+line.Font = Enum.Font.SourceSans
+line.Text = ""
+line.TextColor3 = Color3.new(0, 0, 0)
+line.TextSize = 14
+
+_25.Name = "25"
+_25.Parent = Frame_2
+_25.BackgroundColor3 = Color3.new(0.815686, 0.815686, 0.815686)
+_25.BackgroundTransparency = 0.30000001192093
+_25.BorderSizePixel = 2
+_25.Position = UDim2.new(0.0674846619, 0, 0.202247187, 0)
+_25.Size = UDim2.new(0, 142, 0, 16)
+_25.Font = Enum.Font.SourceSans
+_25.Text = "25"
+_25.TextColor3 = Color3.new(0, 0, 0)
+_25.TextSize = 14
+
+_200.Name = "200"
+_200.Parent = Frame_2
+_200.BackgroundColor3 = Color3.new(0.815686, 0.815686, 0.815686)
+_200.BackgroundTransparency = 0.30000001192093
+_200.BorderSizePixel = 2
+_200.Position = UDim2.new(0.0674846619, 0, 0.797752798, 0)
+_200.Size = UDim2.new(0, 142, 0, 16)
+_200.Font = Enum.Font.SourceSans
+_200.Text = "200"
+_200.TextColor3 = Color3.new(0, 0, 0)
+_200.TextSize = 14
+
+_100.Name = "100"
+_100.Parent = Frame_2
+_100.BackgroundColor3 = Color3.new(0.815686, 0.815686, 0.815686)
+_100.BackgroundTransparency = 0.30000001192093
+_100.BorderSizePixel = 2
+_100.Position = UDim2.new(0.0674846619, 0, 0.606741548, 0)
+_100.Size = UDim2.new(0, 142, 0, 16)
+_100.Font = Enum.Font.SourceSans
+_100.Text = "100"
+_100.TextColor3 = Color3.new(0, 0, 0)
+_100.TextSize = 14
+
+_50.Name = "50"
+_50.Parent = Frame_2
+_50.BackgroundColor3 = Color3.new(0.815686, 0.815686, 0.815686)
+_50.BackgroundTransparency = 0.30000001192093
+_50.BorderSizePixel = 2
+_50.Position = UDim2.new(0.0736196339, 0, 0.410112321, 0)
+_50.Size = UDim2.new(0, 142, 0, 16)
+_50.Font = Enum.Font.SourceSans
+_50.Text = "50"
+_50.TextColor3 = Color3.new(0, 0, 0)
+_50.TextSize = 14
+-- Scripts:
+function SCRIPT_DVST66_FAKESCRIPT() -- optbtn.Script 
+	local script = Instance.new('Script')
+	script.Parent = optbtn
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		    if son then
+			script.Parent.Parent.Frame:TweenSize(UDim2.new(0, 163, 0, 0),"Out","Quad",0.4,true)
+			
+			for i,v in pairs(script.Parent.Parent.Frame:GetChildren()) do
+				if v.Name ~= "maxspeed" then
+				v.Transparency = 1
+				else
+					v.TextTransparency = 1
+				end
+			end
+			
+			
+			son = false
+			else
+			script.Parent.Parent.Frame:TweenSize(UDim2.new(0, 163, 0, 178),"In","Quad",0.4,true)
+			
+			for i,v in pairs(script.Parent.Parent.Frame:GetChildren()) do
+				if v.Name ~= "line" and v.Name ~= "maxspeed" then
+				v.Transparency = 0.3
+				elseif v.Name == "line" then
+				v.Transparency = 0
+				elseif v.Name == "maxspeed" then
+				v.TextTransparency = 0
+				end
+			end
+			
+			
+			son = true
+			end
+		
+		
+	end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_DVST66_FAKESCRIPT))
+function SCRIPT_XUSA80_FAKESCRIPT() -- _25.Script 
+	local script = Instance.new('Script')
+	script.Parent = _25
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		
+		_G.maxspeed = 25
+		
+		
+		
+	end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_XUSA80_FAKESCRIPT))
+function SCRIPT_FOAR80_FAKESCRIPT() -- _200.Script 
+	local script = Instance.new('Script')
+	script.Parent = _200
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		
+		_G.maxspeed = 200
+		
+		
+		
+	end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_FOAR80_FAKESCRIPT))
+function SCRIPT_HUUK86_FAKESCRIPT() -- _100.Script 
+	local script = Instance.new('Script')
+	script.Parent = _100
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		
+		_G.maxspeed = 100
+		
+		
+		
+	end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_HUUK86_FAKESCRIPT))
+function SCRIPT_OOYI66_FAKESCRIPT() -- _50.Script 
+	local script = Instance.new('Script')
+	script.Parent = _50
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		
+		_G.maxspeed = 50
+		
+		
+		
+	end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_OOYI66_FAKESCRIPT))
+function SCRIPT_TPOK81_FAKESCRIPT() -- Frame.Script 
+	local script = Instance.new('Script')
+	script.Parent = Frame
+	local a=game:GetService("UserInputService")local b=script.Parent;local c;local d;local e;local f;local function g(h)local i=h.Position-e;b.Position=UDim2.new(f.X.Scale,f.X.Offset+i.X,f.Y.Scale,f.Y.Offset+i.Y)end;b.InputBegan:Connect(function(h)if h.UserInputType==Enum.UserInputType.MouseButton1 or h.UserInputType==Enum.UserInputType.Touch then c=true;e=h.Position;f=b.Position;h.Changed:Connect(function()if h.UserInputState==Enum.UserInputState.End then c=false end end)end end)b.InputChanged:Connect(function(h)if h.UserInputType==Enum.UserInputType.MouseMovement or h.UserInputType==Enum.UserInputType.Touch then d=h end end)a.InputChanged:Connect(function(h)if h==d and c then g(h)end end)
+
+end
+coroutine.resume(coroutine.create(SCRIPT_TPOK81_FAKESCRIPT))
+
+
+local speedframe = Instance.new("Frame")
+local speedlbl = Instance.new("TextLabel")
+local line2 = Instance.new("TextLabel")
+local speednum = Instance.new("TextLabel")
+
+speedframe.Name = "speedframe"
+speedframe.Parent = ScreenGui
+speedframe.BackgroundColor3 = Color3.new(0.431373, 0.431373, 0.431373)
+speedframe.BackgroundTransparency = 0.30000001192093
+speedframe.Position = UDim2.new(-0.89, 0, -0.400, 0)
+speedframe.Size = UDim2.new(0, 137, 0, 63)
+
+speedlbl.Name = "speedlbl"
+speedlbl.Parent = speedframe
+speedlbl.BackgroundColor3 = Color3.new(1, 1, 1)
+speedlbl.BackgroundTransparency = 1
+speedlbl.BorderSizePixel = 0
+speedlbl.Position = UDim2.new(0, 0, 0.00312877842, 0)
+speedlbl.Size = UDim2.new(0, 136, 0, 20)
+speedlbl.Font = Enum.Font.SourceSans
+speedlbl.Text = "Speed"
+speedlbl.TextColor3 = Color3.new(0, 0, 0)
+speedlbl.TextScaled = true
+speedlbl.TextSize = 14
+speedlbl.TextWrapped = true
+
+line2.Name = "line2"
+line2.Parent = speedframe
+line2.BackgroundColor3 = Color3.new(0, 0, 0)
+line2.BorderSizePixel = 0
+line2.Position = UDim2.new(0.140239716, 0, 0.307832301, 0)
+line2.Size = UDim2.new(0, 98, 0, 1)
+line2.Font = Enum.Font.SourceSans
+line2.Text = ""
+line2.TextColor3 = Color3.new(0, 0, 0)
+line2.TextSize = 14
+
+speednum.Name = "speednum"
+speednum.Parent = speedframe
+speednum.BackgroundColor3 = Color3.new(1, 1, 1)
+speednum.BackgroundTransparency = 1
+speednum.BorderSizePixel = 0
+speednum.Position = UDim2.new(-0.0294587687, 0, 0.459011316, 0)
+speednum.Size = UDim2.new(0, 143, 0, 20)
+speednum.Font = Enum.Font.SourceSans
+speednum.Text = "0"
+speednum.TextColor3 = Color3.new(0, 0, 0)
+speednum.TextScaled = true
+speednum.TextSize = 14
+speednum.TextWrapped = true
+
+spawn(function()
+	while wait() do
+		speednum.Text = lp.Character:WaitForChild("Humanoid").WalkSpeed
+	end
+end)
+
+lp.Character.Humanoid.Died:Connect(function()
+	Frame:TweenPosition(UDim2.new(-0.2, 0, -0.3, 0),"Out","Quad",1,true)
+	speedframe:TweenPosition(UDim2.new(-0.89, 0,-0.400, 0),"Out","Quad",1,true)
+	wait(1.16)
+	ScreenGui:Destroy()
+end)
+
+end
